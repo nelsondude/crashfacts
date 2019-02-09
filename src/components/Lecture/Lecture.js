@@ -14,14 +14,14 @@ class Lecture extends Component {
 
   handleChange = (event) => {
     console.log(event.target.files[0]);
-    this.setState({file: URL.createObjectURL(event.target.files[0])});
+    const url = URL.createObjectURL(event.target.files[0]);
+    this.setState({file: url});
   };
 
 
   render() {
     return (
       <div className={'Lecture'}>
-
         <h1>Lecture</h1>
         <input onChange={this.handleChange} type="file" ref={this.file}/>
         {this.state.file ?

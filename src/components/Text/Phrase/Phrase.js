@@ -105,10 +105,14 @@ class Phrase extends React.Component {
     entities_list.entities.forEach((entity, i) => {
       word_string = word_string.replace(entity.name, `<span><strong>`+entity.name+`</strong></span>`)
     });
-    this.setState({words: word_string + '&nbsp;'})
+    this.setState({words: word_string + '&nbsp;'});
+    this.props.keywordsChanged(entities_list.entities)
   };
 
+
+
   componentDidMount () {
+    //this.props.words is a string
     get_entities(this.props.words, this.replaceWithEntities);
   }
 

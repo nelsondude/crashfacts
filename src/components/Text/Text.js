@@ -15,7 +15,7 @@ const propTypes = {
   startListening: PropTypes.func
 };
 
-const NUM_CHARS = 10;
+const NUM_CHARS = 15;
 
 
 class Text extends Component {
@@ -31,7 +31,7 @@ class Text extends Component {
       .slice(NUM_CHARS*(this.counter-1), NUM_CHARS*this.counter)
       .join(' ');
 
-    this.setState({phrases: [...this.state.phrases, <Phrase key={this.counter} words={words}/>]});
+    this.setState({phrases: [...this.state.phrases, <Phrase keywordsChanged={this.keywordsChanged} key={this.counter} words={words}/>]});
 
     //Returns a list of phrases ['hey there', 'blah blah'] ...
     //Store phrases and their offset which is NUM_CHARS*(this.counter - 1) + entity.offset
@@ -41,7 +41,11 @@ class Text extends Component {
 
   handleClick = (el) => {
     console.log(el);
-  }
+  };
+
+  keywordsChanged = (keywords) => {
+    this.props.keywordsChanged(keywords);
+  };
 
   render() {
     const {
@@ -57,24 +61,24 @@ class Text extends Component {
     }
 
     const transcript_words = transcript.split(' ');
-    if (transcript_words.length > this.counter * NUM_CHARS) {
+    if (transcript_words.length - 3 > this.counter * NUM_CHARS) {
       this.handleAnalysis();
     }
 
     return (
       <div className={'Text'}>
         <h3>Transcript:</h3>
-        <p>
+        <p style={{overflowY: 'scroll', height: '350px'}}>
           {/*Phrase is an array of JSX elements*/}
           {this.state.phrases.map((phrase, i) => phrase)}
           {transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}
         </p>
-        <hr/>
-        <h3>Currently Listening: {listening ? 'Yes' : 'No'}</h3>
         <div>
           <button onClick={resetTranscript}>Reset</button>
           <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button>
+          <h3>Currently Listening: {listening ? 'Yes' : 'No'}</h3>
         </div>
+        <hr/>
       </div>
     )
   }
