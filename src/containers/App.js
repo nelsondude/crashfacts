@@ -89,7 +89,7 @@ class App extends Component {
   state = {
     currentKeyword: 'Keyword Info',
     currentWorkspace: 'My',
-    currentUrl: 'https://m.bing.com/',
+    currentUrl: 'https://en.wikipedia.org/',
     keywords: [],
     open: true
   };

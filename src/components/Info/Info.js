@@ -72,38 +72,6 @@ class Info extends Component {
         </Typography>
         <br/>
         <div/>
-
-          {/* <AppBar position="static">
-            <Toolbar>
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                <MenuIcon />
-              </IconButton>
-              <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                Keywords
-            </Typography>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                />
-              </div>
-              <div className={classes.grow} />
-              <div className={classes.sectionDesktop}>
-                <IconButton color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <EditIcon />
-                  </Badge>
-                </IconButton>
-              </div>
-            </Toolbar>
-          </AppBar> */}
-
           {this.props.keywords.map((keyword, i) => {
             return (
               <ExpansionPanel key={i}>
@@ -122,7 +90,7 @@ class Info extends Component {
                         style={{ marginRight: 8 }}
                         avatar={<Avatar>W</Avatar>}
                         label="Wikipedia"
-                        onClick={()=>{this.props.currentUrlChanged("https://en.wikipedia.org/");}}
+                        onClick={()=>{this.props.currentUrlChanged("https://en.wikipedia.org/wiki/" + keyword.name);}}
                         className={classes.chip}
                       />
                       <Chip
