@@ -139,7 +139,7 @@ class Info extends Component {
                         style={{ marginRight: 8 }}
                         avatar={<Avatar>W</Avatar>}
                         label="Wikipedia"
-                        // onClick={handleClick}
+                        onClick={()=>{this.props.currentUrlChanged("https://en.wikipedia.org/");}}
                         className={classes.chip}
                       />
                       <Chip
