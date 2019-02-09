@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import './Lecture.css';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
 class Lecture extends Component {
   state = {
@@ -21,14 +27,23 @@ class Lecture extends Component {
 
   render() {
     return (
-      <div className={'Lecture'}>
-        <h3>Lecture Content:</h3>
-        <input onChange={this.handleChange} type="file" ref={this.file}/>
+      <div className={'Lecture'} style={{height:'85vh'}}>
+        <Typography component="h1" variant="headline" style={{color:'white'}} gutterBottom>
+            {this.props.currentKeyword}
+        </Typography>
+        {/* <input onChange={this.handleChange} type="file" ref={this.file}/>
         {this.state.file ?
           <object data={this.state.file + `#view=FitH&page=` + this.state.page} type="application/pdf">
           <embed src={this.state.file + `#view=FitH&page=` + this.state.page} type="application/pdf" />
-        </object> : null}
+        </object> : null} */}
 
+        <Card style={{height:'100%'}} raised> 
+          <CardMedia
+            component="iframe"
+            style={{height:'100%'}}
+            src={this.props.currentUrl}
+          />
+        </Card>
       </div>
     )
   }

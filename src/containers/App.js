@@ -22,7 +22,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import HelpIcon from '@material-ui/icons/Help';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ClassIcon from '@material-ui/icons/Class';
 
 const drawerWidth = 240;
@@ -88,6 +89,9 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
+    currentKeyword: 'Keyword Info',
+    currentWorkspace: 'My',
+    currentUrl: 'https://m.bing.com/',
     keywords: [],
     open: true
   };
@@ -104,6 +108,14 @@ class App extends Component {
     const arr = [keywords, ...this.state.keywords];
     this.setState({keywords: [].concat(...arr)})
   };
+
+  currentWorkspaceChanged = (workspace) => {
+    this.setState({currentWorkspace: workspace});
+  }
+
+  currentUrlChanged = (url) => {
+    this.setState({currentUrl: url});
+  } 
 
   render() {
     const { classes, theme } = this.props;
@@ -126,7 +138,7 @@ class App extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Crash Facts
+              {this.state.currentWorkspace} Workspace
             </Typography>
           </Toolbar>
         </AppBar>
@@ -147,15 +159,30 @@ class App extends Component {
           <Divider />
           <List>
             {['Fundamentals of Programming', 'Cognitive Psychology', 'Linguistics', 'Microbiology'].map((text, index) => (
-              <ListItem button key={text}>
+              <ListItem button key={text} onClick={()=>{this.currentWorkspaceChanged(text)}}>
                 <ListItemIcon><ClassIcon/></ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
           <Divider />
+          <List>
+            <ListItem button>
+              <ListItemIcon><AccountCircleIcon/></ListItemIcon>
+              <ListItemText primary='Alex Nelson' />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon><HelpIcon/></ListItemIcon>
+              <ListItemText primary='Help' />
+            </ListItem>
+          </List>
+          <Divider />
           {/* <iframe src="/logo.html" height="300">
           </iframe> */}
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <div>
             <svg width="200" height="250" version="1.1" xmlns="http://www.w3.org/2000/svg">
 
@@ -184,9 +211,10 @@ class App extends Component {
                 stroke="orange" fill="transparent" stroke-width="5" />
               <polyline points="145 130 148 140 155 128 158 135 165 128"
                 stroke="orange" fill="transparent" stroke-width="5" />
-
-
             </svg>
+
+            <img style={{width:'100%'}} src="/CrashFacts.png"/>
+
           </div>
         </Drawer>
 
@@ -196,10 +224,10 @@ class App extends Component {
           <div className="row">
             <div className="col-7">
               <Text keywordsChanged={this.keywordsChanged}/>
-              <Info keywords={this.state.keywords}/>
+              <Info keywords={this.state.keywords} currentUrlChanged={this.currentUrlChanged}/>
             </div>
             <div className="col-5">
-              <Lecture/>
+              <Lecture currentKeyword={this.state.currentKeyword} currentUrl={this.state.currentUrl}/>
             </div>
           </div>
         </div>
