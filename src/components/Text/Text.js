@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import './Text.css';
 import SpeechRecognition from 'react-speech-recognition';
 import Phrase from './Phrase/Phrase';
+import Fab from '@material-ui/core/Fab';
+import MicIcon from '@material-ui/icons/Mic';
+import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography';
 
 
 const propTypes = {
@@ -67,17 +71,22 @@ class Text extends Component {
 
     return (
       <div className={'Text'}>
-        <h3>Transcript:</h3>
-        <p style={{overflowY: 'scroll', height: '350px'}}>
+        <Typography component="h1" variant="headline" style={{color:'white'}} gutterBottom>
+          Transcript
+        </Typography>
+        <div>
+          <Fab color="secondary" onClick={listening ? stopListening : startListening} aria-label="Record" style={{float:'right'}}>
+            <MicIcon />
+          </Fab>
+          {/* <button onClick={resetTranscript}>Reset</button>
+          <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button> */}
+          <small>Currently Listening: {listening ? 'Yes' : 'No'}</small>
+        </div>
+        <p style={{overflowY: 'auto', height: '200px'}}>
           {/*Phrase is an array of JSX elements*/}
           {this.state.phrases.flat()}
           <span>{transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}</span>
         </p>
-        <div>
-          <button onClick={resetTranscript}>Reset</button>
-          <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button>
-          <p>Currently Listening: {listening ? 'Yes' : 'No'}</p>
-        </div>
         <hr/>
       </div>
     )
