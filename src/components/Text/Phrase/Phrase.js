@@ -1,4 +1,5 @@
 import React from 'react';
+import {get_definitions} from '../Definitions';
 
 let https = require('https');
 
@@ -105,14 +106,28 @@ class Phrase extends React.Component {
     let word_string = this.state.words.slice();
     entities_list.entities.forEach((entity, i) => {
       // hijack the replace method to only add keywords we actually find in the source text
-      if (entity.type != "DateTime") {
-        word_string.replace(entity.name, () => {
-          this.props.keywordsChanged([{ name: entity.name }]);
+      if (entity.type != "DateTime" && entity.type != "Quantity") {
+
+        // get the short definiton and attach to entity
+        get_definitions(entity.name, (result)=>{
+
+          let description = "We don't have a short defiinition for this keyword!";
+          if (result.entities) {
+            if (result.entities.value) {
+              description = result.entities.value[0].description;
+            }
+          }
+
+          word_string.replace(entity.name, () => {
+            this.props.keywordsChanged([{ name: entity.name, description: description}]);
+          });
+
+          word_string = word_string.replace(entity.name, `<span><strong>` + entity.name + `</strong></span>`);
+
+          this.setState({ words: word_string + '&nbsp;' });
         });
-        word_string = word_string.replace(entity.name, `<span><strong>` + entity.name + `</strong></span>`);
       }
     });
-    this.setState({ words: word_string + '&nbsp;' });
   };
 
   componentDidMount() {
