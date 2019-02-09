@@ -5,7 +5,7 @@ import SpeechRecognition from 'react-speech-recognition';
 import Phrase from './Phrase/Phrase';
 import Fab from '@material-ui/core/Fab';
 import MicIcon from '@material-ui/icons/Mic';
-import Icon from '@material-ui/core/Icon';
+import StopIcon from '@material-ui/icons/Stop';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -19,7 +19,7 @@ const propTypes = {
   startListening: PropTypes.func
 };
 
-const NUM_CHARS = 5;
+const NUM_CHARS = 10;
 
 
 class Text extends Component {
@@ -54,7 +54,6 @@ class Text extends Component {
   render() {
     const {
       transcript,
-      resetTranscript,
       browserSupportsSpeechRecognition,
       stopListening,
       listening,
@@ -75,8 +74,8 @@ class Text extends Component {
           Transcript
         </Typography>
         <div>
-          <Fab color="secondary" onClick={listening ? stopListening : startListening} aria-label="Record" style={{float:'right'}}>
-            <MicIcon />
+          <Fab color={listening ? "secondary" : "default"} onClick={listening ? stopListening : startListening} aria-label="Record" style={{float:'right'}}>
+            {listening ? <StopIcon/>  : <MicIcon />}
           </Fab>
           {/* <button onClick={resetTranscript}>Reset</button>
           <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button> */}
@@ -95,4 +94,6 @@ class Text extends Component {
 
 Text.propTypes = propTypes;
 
-export default SpeechRecognition(Text)
+export default SpeechRecognition({
+  autoStart: false
+})(Text)

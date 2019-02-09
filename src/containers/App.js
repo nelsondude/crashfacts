@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Sidebar from "../components/Sidebar/Sidebar";
 import Text from "../components/Text/Text";
 import Info from "../components/Info/Info";
 import Lecture from "../components/Lecture/Lecture";
@@ -9,7 +8,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
