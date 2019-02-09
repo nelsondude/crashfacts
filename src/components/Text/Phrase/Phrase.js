@@ -147,17 +147,19 @@ class Phrase extends React.Component {
             }
             if (match[2]) {
               let description = "We don't have a short definition for this keyword!";
+              let bing = "";
               if (data.entities) {
                 if (data.entities.value) {
                   data.entities.value.forEach((des, i) => {
                     if (match[2].toLowerCase() == des.name.toLowerCase()) {
                       description = des.description;
+                      bing = des.webSearchUrl;
                       return
                     }
                   });
                 }
               }
-              keywords.push({name: match[2], description});
+              keywords.push({name: match[2], description, bing});
               result.push(
                 <Tooltip title={description} key={counter + match[2]}>
                   <span><strong>{match[2]}</strong></span>
