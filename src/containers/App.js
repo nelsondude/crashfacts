@@ -88,10 +88,7 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
-    keywords: [{
-      name: "Bill Gates",
-      description: "William Henry Gates III KBE DFBCS is an American business magnate, investor, author, philanthropist, and humanitarian. He is best known as the principal founder of Microsoft Corporation. During his career at Microsoft, Gates held the positions of chairman, CEO and chief software architect, while also being the largest individual shareholder until May 2014."
-    }],
+    keywords: [],
     open: true
   };
 

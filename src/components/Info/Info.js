@@ -15,6 +15,21 @@ import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import EditIcon from '@material-ui/icons/Edit';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+
 
 const classes = theme => ({
   root: {
@@ -69,7 +84,43 @@ class Info extends Component {
       <div className={'Info'}>
         <div className={classes.root}>
 
-          <h3>Keywords for your convenience:</h3>
+        <Typography component="h1" variant="headline" style={{color:'white'}} gutterBottom>
+          Keywords
+        </Typography>
+        <br/>
+        <div/>
+
+          {/* <AppBar position="static">
+            <Toolbar>
+              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                <MenuIcon />
+              </IconButton>
+              <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                Keywords
+            </Typography>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                />
+              </div>
+              <div className={classes.grow} />
+              <div className={classes.sectionDesktop}>
+                <IconButton color="inherit">
+                  <Badge badgeContent={4} color="secondary">
+                    <EditIcon />
+                  </Badge>
+                </IconButton>
+              </div>
+            </Toolbar>
+          </AppBar> */}
+
           {this.props.keywords.map((keyword, i) => {
             return (
               <ExpansionPanel>
@@ -85,21 +136,21 @@ class Info extends Component {
                   <div style={{ display: 'block' }}>
                     <div>
                       <Chip
-                        style={{marginRight: 8}}
+                        style={{ marginRight: 8 }}
                         avatar={<Avatar>W</Avatar>}
                         label="Wikipedia"
                         // onClick={handleClick}
                         className={classes.chip}
                       />
                       <Chip
-                        style={{marginRight: 8}}
+                        style={{ marginRight: 8 }}
                         avatar={<Avatar>G</Avatar>}
                         label="Google"
                         // onClick={handleClick}
                         className={classes.chip}
                       />
                       <Chip
-                        style={{marginRight: 8}}
+                        style={{ marginRight: 8 }}
                         avatar={<Avatar>B</Avatar>}
                         label="Bing"
                         // onClick={handleClick}
@@ -108,8 +159,8 @@ class Info extends Component {
                     </div>
                     <div>
                       <Chip
-                        style={{marginTop: 8, marginRight: 8}}
-                        avatar={<Avatar><InsertDriveFileIcon/></Avatar>}
+                        style={{ marginTop: 8, marginRight: 8 }}
+                        avatar={<Avatar><InsertDriveFileIcon /></Avatar>}
                         label="Lecture Notes - Week 5"
                         // onClick={handleClick}
                         className={classes.chip}
