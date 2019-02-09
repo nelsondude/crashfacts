@@ -142,7 +142,7 @@ class Info extends Component {
                     </div>
 
                     {
-                      (keyword.name.includes("broca")) ? (<div>
+                      (keyword.name.toLowerCase().includes("broca")) ? (<div>
                         <Chip
                           style={{ marginTop: 8, marginRight: 8 }}
                           avatar={<Avatar><InsertDriveFileIcon /></Avatar>}
