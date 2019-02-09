@@ -76,7 +76,7 @@ class Text extends Component {
         <div>
           <button onClick={resetTranscript}>Reset</button>
           <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button>
-          <h3>Currently Listening: {listening ? 'Yes' : 'No'}</h3>
+          <p>Currently Listening: {listening ? 'Yes' : 'No'}</p>
         </div>
         <hr/>
       </div>

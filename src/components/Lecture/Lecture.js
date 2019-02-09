@@ -22,7 +22,7 @@ class Lecture extends Component {
   render() {
     return (
       <div className={'Lecture'}>
-        <h1>Lecture</h1>
+        <h3>Lecture Content:</h3>
         <input onChange={this.handleChange} type="file" ref={this.file}/>
         {this.state.file ?
           <object data={this.state.file + `#view=FitH&page=` + this.state.page} type="application/pdf">
