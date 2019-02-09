@@ -136,7 +136,7 @@ class Info extends Component {
                         style={{ marginRight: 8 }}
                         avatar={<Avatar>B</Avatar>}
                         label="Bing"
-                        // onClick={handleClick}
+                        onClick={()=>{this.props.currentUrlChanged(keyword.bing);}}
                         className={classes.chip}
                       />
                     </div>
