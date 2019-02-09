@@ -84,7 +84,6 @@ function get_entities(text, callback) {
     response.on('end', function () {
       let body_ = JSON.parse(body);
       //let body__ = JSON.stringify(body_, null, '  ');
-      console.log(body_);
       callback(body_.documents[0]);
     });
     response.on('error', function (e) {
@@ -96,23 +95,29 @@ function get_entities(text, callback) {
 }
 
 class Phrase extends React.Component {
+  state = {
+    words: this.props.words
+  };
 
   replaceWithEntities = (entities_list) => {
-    console.log(entities_list);
-
-
-  }
+    console.log('entities list: ', entities_list.entities);
+    let word_string = this.state.words.slice();
+    entities_list.entities.forEach((entity, i) => {
+      word_string = word_string.replace(entity.name, `<span><strong>`+entity.name+`</strong></span>`)
+    });
+    this.setState({words: word_string + '&nbsp;'})
+  };
 
   componentDidMount () {
-    get_entities(this.props.words.join(" "), this.replaceWithEntities);
+    get_entities(this.props.words, this.replaceWithEntities);
   }
 
   render() {
     return (
-      <div>{this.props.words}</div>
+      <span dangerouslySetInnerHTML={{__html: this.state.words.slice()}} style={{wordWrap: 'break-word'}}/>
     )
   }
-};
+}
 
 export { get_keyPhrases, get_entities };
 export default Phrase;

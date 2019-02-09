@@ -15,7 +15,7 @@ const propTypes = {
   startListening: PropTypes.func
 };
 
-const NUM_CHARS = 5;
+const NUM_CHARS = 10;
 
 
 class Text extends Component {
@@ -28,7 +28,8 @@ class Text extends Component {
     //Do API Call on this here
     let words = this.props.transcript
       .split(' ')
-      .slice(NUM_CHARS*(this.counter-1), NUM_CHARS*this.counter);
+      .slice(NUM_CHARS*(this.counter-1), NUM_CHARS*this.counter)
+      .join(' ');
 
     this.setState({phrases: [...this.state.phrases, <Phrase key={this.counter} words={words}/>]});
 
@@ -55,8 +56,8 @@ class Text extends Component {
       return null
     }
 
-    const num_words = transcript.split(' ').length;
-    if (num_words > this.counter * NUM_CHARS) {
+    const transcript_words = transcript.split(' ');
+    if (transcript_words.length > this.counter * NUM_CHARS) {
       this.handleAnalysis();
     }
 
@@ -66,6 +67,7 @@ class Text extends Component {
         <p>
           {/*Phrase is an array of JSX elements*/}
           {this.state.phrases.map((phrase, i) => phrase)}
+          {transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}
         </p>
         <hr/>
         <h3>Currently Listening: {listening ? 'Yes' : 'No'}</h3>
