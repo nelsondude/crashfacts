@@ -136,19 +136,24 @@ class Info extends Component {
                         style={{ marginRight: 8 }}
                         avatar={<Avatar>B</Avatar>}
                         label="Bing"
-                        onClick={()=>{this.props.currentUrlChanged(keyword.bing);}}
+                        onClick={()=>{this.props.currentUrlChanged(keyword.bing.replace(/\\/g, ''))}}
                         className={classes.chip}
                       />
                     </div>
-                    <div>
-                      <Chip
-                        style={{ marginTop: 8, marginRight: 8 }}
-                        avatar={<Avatar><InsertDriveFileIcon /></Avatar>}
-                        label="Lecture Notes - Week 5"
-                        // onClick={handleClick}
-                        className={classes.chip}
-                      />
-                    </div>
+
+                    {
+                      (keyword.name.includes("broca")) ? (<div>
+                        <Chip
+                          style={{ marginTop: 8, marginRight: 8 }}
+                          avatar={<Avatar><InsertDriveFileIcon /></Avatar>}
+                          label="Lecture Notes - Week 5"
+                          // onClick={handleClick}
+                          onClick={()=>{this.props.currentUrlChanged("https://firebasestorage.googleapis.com/v0/b/crashfacts.appspot.com/o/31-langacq.pdf?alt=media&token=4f4cbfcd-0723-49b4-bcf9-bb5c64033a83#page=4");}}
+                          className={classes.chip}
+                        />
+                      </div>) : <div/>
+                    }
+                    
                     <br />
                     <div>
                       <Typography>{keyword.description}</Typography>
