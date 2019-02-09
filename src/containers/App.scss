@@ -2,3 +2,17 @@
 
 }
 
+.rotate-360 {
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform:rotateY(0deg);
+  }
+  100% {
+    transform:rotateY(360deg);
+  }
+}
