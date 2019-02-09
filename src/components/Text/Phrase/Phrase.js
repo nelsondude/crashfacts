@@ -83,6 +83,7 @@ function get_entities(text, callback) {
     });
     response.on('end', function () {
       let body_ = JSON.parse(body);
+      console.log(body_);
       //let body__ = JSON.stringify(body_, null, '  ');
       callback(body_.documents[0]);
     });
@@ -103,22 +104,25 @@ class Phrase extends React.Component {
     console.log('entities list: ', entities_list.entities);
     let word_string = this.state.words.slice();
     entities_list.entities.forEach((entity, i) => {
-      word_string = word_string.replace(entity.name, `<span><strong>`+entity.name+`</strong></span>`)
+      // hijack the replace method to only add keywords we actually find in the source text
+      if (entity.type != "DateTime") {
+        word_string.replace(entity.name, () => {
+          this.props.keywordsChanged([{ name: entity.name }]);
+        });
+        word_string = word_string.replace(entity.name, `<span><strong>` + entity.name + `</strong></span>`);
+      }
     });
-    this.setState({words: word_string + '&nbsp;'});
-    this.props.keywordsChanged(entities_list.entities)
+    this.setState({ words: word_string + '&nbsp;' });
   };
 
-
-
-  componentDidMount () {
+  componentDidMount() {
     //this.props.words is a string
     get_entities(this.props.words, this.replaceWithEntities);
   }
 
   render() {
     return (
-      <span dangerouslySetInnerHTML={{__html: this.state.words.slice()}} style={{wordWrap: 'break-word'}}/>
+      <span dangerouslySetInnerHTML={{ __html: this.state.words.slice() }} style={{ wordWrap: 'break-word' }} />
     )
   }
 }
