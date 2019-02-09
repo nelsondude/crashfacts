@@ -101,7 +101,7 @@ class App extends Component {
   };
 
   keywordsChanged = (keywords) => {
-    const arr = [...this.state.keywords, keywords];
+    const arr = [keywords, ...this.state.keywords];
     this.setState({keywords: [].concat(...arr)})
   };
 
