@@ -1,5 +1,7 @@
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
+import {get_definitions} from '../Definitions';
+import axios from 'axios';
 
 let https = require('https');
 
@@ -110,38 +112,57 @@ class Phrase extends React.Component {
     });
   }
 
-  replaceWithEntities = (entities_list) => {
-    console.log('entities list: ', entities_list.entities);
-    let word_string = this.state.words.slice();
-    entities_list.entities.forEach((entity, i) => {
-      // hijack the replace method to only add keywords we actually find in the source text
-      if (entity.type != "DateTime") {
-        word_string.replace(entity.name, () => {
-          this.props.keywordsChanged([{ name: entity.name }]);
-        });
-        word_string = word_string.replace(entity.name, `<strong>` + entity.name + `&nbsp;</strong>`);
-      }
-    });
-    const regex = /([^<]*)?(<strong[^>]*>.*?<\/strong>)?/g;
+  addTooltip = (word_string) => {
+    console.log('word', word_string);
+    const regex = /([^<]*)?<strong[^>]*>(.*?)<\/strong>?/g;
     let match = regex.exec(word_string);
     let result = [];
-    while (match) {
+    while (match != null) {
+      console.log(1)
       if (match[1]) {
         result.push(<span key={match[1]} dangerouslySetInnerHTML={{__html: match[1] + '&nbsp;'}}/>)
       }
+      console.log(2)
       if (match[2]) {
-        result.push(
-          <Tooltip title={'Definition'} key={match[2]}>
-            <span dangerouslySetInnerHTML={{__html: match[2]}}/>
-          </Tooltip>)
+        var entity_name = match[2];
+        console.log('search term: ', entity_name);
+        get_definitions(entity_name)
+          .then((data) => {
+            console.log('got here')
+            let description = "We don't have a short defiinition for this keyword!";
+            console.log('this is after')
+            // console.log(data);
+            // if (data.entities) {
+            //   if (data.entities.value) {
+            //     description = data.entities.value[0].description;
+            //   }
+            // }
+            result.push(
+              <Tooltip title={description} key={match[2]}>
+                <span><strong>{match[2]+' '}</strong></span>
+              </Tooltip>)
+          })
+
       }
+      console.log('3')
       if (!match[1] && !match[2]) {
         break;
       }
       match = regex.exec(word_string);
     }
-
     this.setState({ words: result});
+  }
+
+  replaceWithEntities = (entities_list) => {
+    console.log('entities list: ', entities_list.entities);
+    let word_string = this.state.words.slice();
+    entities_list.entities.forEach((entity, i) => {
+      // hijack the replace method to only add keywords we actually find in the source text
+      if (entity.type != "DateTime" && entity.type != "Quantity") {
+        word_string = word_string.replace(entity.name, `<strong>` + entity.name + `</strong>`);
+      }
+    });
+    this.addTooltip(word_string)
   };
 
   componentDidMount() {

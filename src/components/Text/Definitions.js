@@ -1,3 +1,4 @@
+import axios from 'axios';
 let https = require('https');
 let querystring = require('querystring')
 
@@ -16,50 +17,23 @@ let accessKey = 'ea1b151321d9410aac82b52653f61c77';
 
 // NOTE: Free trial access keys are generated in the westcentralus region, so if you are using
 // a free trial access key, you should not need to change this region.
-let uri = 'api.cognitive.microsoft.com';
+let uri = 'https://api.cognitive.microsoft.com';
 let bing_path = '/bing/v7.0/entities';
 
-function setup_parameters(text) {
-    var params = {
-        // Request parameters
-        "q": text,
-        "mkt": "en-us",
-        "count": "1",
-        "offset": "0",
-        "safesearch": "Moderate",
-    };
-    return params;
-}
-
-function get_definitions(text, callback) {
-    let param_path = bing_path + "?" + querystring.stringify(setup_parameters(text));
-
-    let request_params = {
-        method: 'GET',
-        hostname: uri,
-        path: param_path,
+function get_definitions(text) {
+    return axios.get(uri + bing_path, {
+        params: {
+            // Request parameters
+            "q": text,
+            "mkt": "en-us",
+            "count": "1",
+            "offset": "0",
+            "safesearch": "Moderate",
+        },
         headers: {
-            'Ocp-Apim-Subscription-Key': accessKey,
+            'Ocp-Apim-Subscription-Key': accessKey
         }
-    };
-
-    let req = https.request(request_params, response => {
-        let body = '';
-        response.on('data', function (d) {
-            body += d;
-        });
-        response.on('end', function () {
-            let body_ = JSON.parse(body);
-            //let body__ = JSON.stringify(body_, null, '  ');
-            console.log(body_);
-            callback(body_);
-        });
-        response.on('error', function (e) {
-            console.log('Error: ' + e.message);
-        });
     });
-    //req.write(body);
-    req.end();
 }
 
 export {get_definitions};
