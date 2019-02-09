@@ -93,18 +93,18 @@ class Info extends Component {
                         onClick={()=>{this.props.currentUrlChanged("https://en.wikipedia.org/wiki/" + keyword.name);}}
                         className={classes.chip}
                       />
+                      {keyword.bing ? <Chip
+                        style={{ marginRight: 8 }}
+                        avatar={<Avatar>B</Avatar>}
+                        label="Bing"
+                        onClick={()=>{this.props.currentUrlChanged(keyword.bing.replace(/\\/g, ''))}}
+                        className={classes.chip}
+                      /> : null}
                       <Chip
                         style={{ marginRight: 8 }}
                         avatar={<Avatar>G</Avatar>}
                         label="Google"
                         // onClick={handleClick}
-                        className={classes.chip}
-                      />
-                      <Chip
-                        style={{ marginRight: 8 }}
-                        avatar={<Avatar>B</Avatar>}
-                        label="Bing"
-                        onClick={()=>{this.props.currentUrlChanged(keyword.bing.replace(/\\/g, ''))}}
                         className={classes.chip}
                       />
                     </div>
