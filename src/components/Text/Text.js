@@ -68,7 +68,7 @@ class Text extends Component {
     return (
       <div className={'Text'}>
         <h3>Transcript:</h3>
-        <p style={{overflowY: 'scroll', height: '350px'}}>
+        <p style={{overflowY: 'auto', height: '300px'}}>
           {/*Phrase is an array of JSX elements*/}
           {this.state.phrases.map((phrase, i) => phrase)}
           {transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}

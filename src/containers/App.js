@@ -23,7 +23,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ClassIcon from '@material-ui/icons/Class';
 
 const drawerWidth = 240;
 
@@ -146,22 +146,48 @@ class App extends Component {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            {['Fundamentals of Programming', 'Cognitive Psychology', 'Linguistics', 'Microbiology'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon><ClassIcon/></ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
           <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          {/* <iframe src="/logo.html" height="300">
+          </iframe> */}
+          <div>
+            <svg width="200" height="250" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+              <ellipse cx="120" cy="120" rx="50" ry="100" stroke="red" fill="red" stroke-width="5" />
+
+              <path d="M110 165 Q 110 145 108 145" stroke="" fill="yellow" stroke-width="5" />
+              <path d="M108 145 Q 97 132 100 128" stroke="yellow" fill="yellow" stroke-width="5" />
+              <path d="M100 128 Q 102 116 118 112" stroke="yellow" fill="yellow" stroke-width="5" />
+
+              <path d="M130 165 Q 130 145 132 145" stroke="yellow" fill="yellow" stroke-width="5" />
+              <path d="M132 145 Q 143 132 140 128" stroke="yellow" fill="yellow" stroke-width="5" />
+              <path d="M140 128 Q 138 116 118 112" stroke="yellow" fill="yellow" stroke-width="5" />
+
+              <ellipse cx="120" cy="130" rx="22" ry="16" stroke="transparent" fill="yellow" stroke-width="3" />
+              <rect x="108" y="145" width="20" height="20" stroke="transparent" fill="yellow" stroke-width="3" />
+
+              <ellipse cx="120" cy="170" rx="15" ry="5" stroke="black" fill="orange" stroke-width="5" />
+              <ellipse cx="120" cy="180" rx="15" ry="5" stroke="black" fill="orange" stroke-width="5" />
+              <ellipse cx="120" cy="190" rx="15" ry="5" stroke="black" fill="orange" stroke-width="5" />
+
+              <polyline points="80 120 85 135 90 130 95 145 100 140"
+                stroke="orange" fill="transparent" stroke-width="5" />
+              <polyline points="85 85 90 100 96 93 100 110 105 105"
+                stroke="orange" fill="transparent" stroke-width="5" />
+              <polyline points="125 105 130 110 134 95 140 105 146 90"
+                stroke="orange" fill="transparent" stroke-width="5" />
+              <polyline points="145 130 148 140 155 128 158 135 165 128"
+                stroke="orange" fill="transparent" stroke-width="5" />
+
+
+            </svg>
+          </div>
         </Drawer>
 
         <div className={classNames(classes.content, {
