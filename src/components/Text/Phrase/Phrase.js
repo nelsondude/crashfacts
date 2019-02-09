@@ -112,49 +112,79 @@ class Phrase extends React.Component {
     });
   }
 
-  addTooltip = (word_string) => {
-    console.log('word', word_string);
-    const regex = /([^<]*)?<strong[^>]*>(.*?)<\/strong>?/g;
+  getPromises = (word_string) => {
+    const regex = /([^<]*)?(?:<strong[^>]*>(.*?)<\/strong>)?/g;
     let match = regex.exec(word_string);
-    let result = [];
+    let promises = []
     while (match != null) {
-      console.log(1)
-      if (match[1]) {
-        result.push(<span key={match[1]} dangerouslySetInnerHTML={{__html: match[1] + '&nbsp;'}}/>)
-      }
-      console.log(2)
       if (match[2]) {
         var entity_name = match[2];
-        console.log('search term: ', entity_name);
-        get_definitions(entity_name)
-          .then((data) => {
-            console.log('got here')
-            let description = "We don't have a short defiinition for this keyword!";
-            console.log('this is after')
-            // console.log(data);
-            // if (data.entities) {
-            //   if (data.entities.value) {
-            //     description = data.entities.value[0].description;
-            //   }
-            // }
-            result.push(
-              <Tooltip title={description} key={match[2]}>
-                <span><strong>{match[2]+' '}</strong></span>
-              </Tooltip>)
-          })
-
+        promises.push(get_definitions(entity_name))
       }
-      console.log('3')
       if (!match[1] && !match[2]) {
         break;
       }
       match = regex.exec(word_string);
     }
-    this.setState({ words: result});
-  }
+    return promises;
+  };
+
+  addTooltip = (word_string) => {
+    let promises = this.getPromises(word_string)
+    const regex = /([^<]*)?(?:<strong[^>]*>(.*?)<\/strong>)?/g;
+    var match = regex.exec(word_string)
+    axios.all(promises)
+      .then((results) => {
+        let result = [];
+        let keywords = [];
+        let counter = 0;
+        results.forEach((response) => {
+          let data = response.data;
+          while (match != null) {
+            if (match[1]) {
+              result.push(<span key={counter + match[1]} dangerouslySetInnerHTML={{__html: '&nbsp;' + match[1] + '&nbsp;'}}/>)
+              counter += 1;
+            }
+            if (match[2]) {
+              let description = "We don't have a short definition for this keyword!";
+              if (data.entities) {
+                if (data.entities.value) {
+                  data.entities.value.forEach((des, i) => {
+                    if (match[2].toLowerCase() == des.name.toLowerCase()) {
+                      description = des.description;
+                      return
+                    }
+                  });
+                }
+              }
+              keywords.push({name: match[2], description});
+              result.push(
+                <Tooltip title={description} key={counter + match[2]}>
+                  <span><strong>{match[2]}</strong></span>
+                </Tooltip>)
+              counter += 1;
+            }
+            if (!match[1] && !match[2]) {
+              break;
+            }
+            match = regex.exec(word_string)
+          }
+        });
+        if (keywords.length > 0) {
+          this.props.keywordsChanged(keywords);
+        }
+        return result;
+      })
+      .then((result) => {
+        console.log('final result: ', result);
+
+        if (result.length > 0) {
+          this.setState({words: result})
+        }
+      })
+  };
 
   replaceWithEntities = (entities_list) => {
-    console.log('entities list: ', entities_list.entities);
     let word_string = this.state.words.slice();
     entities_list.entities.forEach((entity, i) => {
       // hijack the replace method to only add keywords we actually find in the source text
@@ -167,6 +197,7 @@ class Phrase extends React.Component {
 
   componentDidMount() {
     //this.props.words is a string
+    console.log('extra words on second rerender: ',this.props.words)
     get_entities(this.props.words, this.replaceWithEntities);
   }
 

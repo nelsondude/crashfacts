@@ -15,7 +15,7 @@ const propTypes = {
   startListening: PropTypes.func
 };
 
-const NUM_CHARS = 5;
+const NUM_CHARS = 10;
 
 
 class Text extends Component {

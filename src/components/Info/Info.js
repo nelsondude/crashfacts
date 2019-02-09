@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Info.css'
 
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -14,21 +13,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EditIcon from '@material-ui/icons/Edit';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 
 
 const classes = theme => ({
@@ -79,7 +63,6 @@ class Info extends Component {
   };
 
   render() {
-    const { expanded } = this.state;
     return (
       <div className={'Info'}>
         <div className={classes.root}>
@@ -123,7 +106,7 @@ class Info extends Component {
 
           {this.props.keywords.map((keyword, i) => {
             return (
-              <ExpansionPanel>
+              <ExpansionPanel key={i}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <div className={classes.column}>
                     <Typography className={classes.heading}>{keyword.name}</Typography>
@@ -171,16 +154,6 @@ class Info extends Component {
                       <Typography>{keyword.description}</Typography>
                     </div>
                   </div>
-
-                  {/* <div className={classNames(classes.column, classes.helper)}>
-                    <Typography variant="caption">
-                      Select your destination of choice
-              <br />
-                      <a href="#sub-labels-and-columns" className={classes.link}>
-                        Learn more
-              </a>
-                    </Typography>
-                  </div> */}
                 </ExpansionPanelDetails>
                 <Divider />
                 <ExpansionPanelActions>
