@@ -70,8 +70,8 @@ class Text extends Component {
         <h3>Transcript:</h3>
         <p style={{overflowY: 'scroll', height: '350px'}}>
           {/*Phrase is an array of JSX elements*/}
-          {this.state.phrases.map((phrase, i) => phrase)}
-          {transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}
+          {this.state.phrases.flat()}
+          <span>{transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}</span>
         </p>
         <div>
           <button onClick={resetTranscript}>Reset</button>

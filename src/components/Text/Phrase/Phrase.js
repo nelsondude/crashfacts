@@ -1,4 +1,5 @@
 import React from 'react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 let https = require('https');
 
@@ -63,8 +64,6 @@ function get_keyPhrases(text, callback) {
 }
 
 function get_entities(text, callback) {
-  console.log("sending ");
-  console.log(text);
   let body = JSON.stringify(setup_document(text));
 
   let request_params = {
@@ -96,9 +95,20 @@ function get_entities(text, callback) {
 }
 
 class Phrase extends React.Component {
-  state = {
-    words: this.props.words
-  };
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      words: props.words,
+      tooltipOpen: false
+    }
+  }
+
+  toggle() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+  }
 
   replaceWithEntities = (entities_list) => {
     console.log('entities list: ', entities_list.entities);
@@ -109,10 +119,29 @@ class Phrase extends React.Component {
         word_string.replace(entity.name, () => {
           this.props.keywordsChanged([{ name: entity.name }]);
         });
-        word_string = word_string.replace(entity.name, `<span><strong>` + entity.name + `</strong></span>`);
+        word_string = word_string.replace(entity.name, `<strong>` + entity.name + `&nbsp;</strong>`);
       }
     });
-    this.setState({ words: word_string + '&nbsp;' });
+    const regex = /([^<]*)?(<strong[^>]*>.*?<\/strong>)?/g;
+    let match = regex.exec(word_string);
+    let result = [];
+    while (match) {
+      if (match[1]) {
+        result.push(<span key={match[1]} dangerouslySetInnerHTML={{__html: match[1] + '&nbsp;'}}/>)
+      }
+      if (match[2]) {
+        result.push(
+          <Tooltip title={'Definition'} key={match[2]}>
+            <span dangerouslySetInnerHTML={{__html: match[2]}}/>
+          </Tooltip>)
+      }
+      if (!match[1] && !match[2]) {
+        break;
+      }
+      match = regex.exec(word_string);
+    }
+
+    this.setState({ words: result});
   };
 
   componentDidMount() {
@@ -121,8 +150,9 @@ class Phrase extends React.Component {
   }
 
   render() {
+    const {words} = this.state;
     return (
-      <span dangerouslySetInnerHTML={{ __html: this.state.words.slice() }} style={{ wordWrap: 'break-word' }} />
+      words
     )
   }
 }
