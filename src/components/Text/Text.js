@@ -81,12 +81,12 @@ class Text extends Component {
           <button onClick={listening ? stopListening : startListening}>{listening ? 'Stop' : 'Start'}</button> */}
           <small>Currently Listening: {listening ? 'Yes' : 'No'}</small>
         </div>
-        <p style={{overflowY: 'auto', height: '200px'}}>
+        <p style={{overflowY: 'auto', height: '200px', fontSize: '21px'}}>
           {/*Phrase is an array of JSX elements*/}
           {this.state.phrases.flat()}
           <span>{transcript_words.slice((this.counter - 1) * NUM_CHARS).join(' ')}</span>
         </p>
-        <hr/>
+        <hr style={{borderTop: '1px solid white'}}/>
       </div>
     )
   }
